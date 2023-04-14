@@ -1,0 +1,31 @@
+{
+  "name": "wdio-cucumber-ts",
+  "version": "1.0.0",
+  "description": "Learning webdriver io framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "wdio": "wdio run ./wdio.conf.ts"
+  },
+  "keywords": [
+    "webdriverio",
+    "typescript",
+    "cucumber",
+    "nodejs"
+  ],
+  "author": "Komala",
+  "license": "ISC",
+  "dependencies": {
+    "@wdio/cli": "^8.8.2",
+    "@wdio/local-runner": "^8.8.2",
+    "ts-node": "^10.9.1",
+    "wdio-chromedriver-service": "^8.1.1",
+    "wdio-spec-reporter": "^0.1.5"
+  },
+  "devDependencies": {
+    "@wdio/cucumber-framework": "^8.8.0",
+    "@wdio/spec-reporter": "^8.8.0",
+    "chromedriver": "^112.0.0",
+    "tsconfig-paths": "^4.2.0"
+  }
+}
