@@ -1,33 +1,69 @@
 import { Given, When, Then } from '@wdio/cucumber-framework';
-import datatablePage from '../pageobjects/datatable.page';
+import loginPage from '../pageobjects/login.page';
 import LoginPage from '../pageobjects/login.page';
 import SecurePage from '../pageobjects/secure.page';
 
 
 const pages = {
-    login: LoginPage
+    login: LoginPage,
+   
 }
 
 Given(/^I am on the (\w+) page$/, async (page) => {
     await pages[page].open()
 });
 
-When(/^I login with (\w+) and (.+)$/, async (username, password) => {
-    await LoginPage.login(username, password)
+
+Given(/^I check rowHash method$/, async (data) => {
+   // console.log(data);
+    let rows = data.rowsHash();
+    //console.log(rows.username +" and "+ rows.password);
+  
+
+    //await LoginPage.login(username, password)
 });
 
-Then(/^I should see a flash message saying (.*)$/, async (message) => {
-    await expect(SecurePage.flashAlert).toBeExisting();
-    await expect(SecurePage.flashAlert).toHaveTextContaining(message);
+Given(/^I check Hashes method$/, async (data) => {
+    //console.log(data);
+    let rows = data.hashes();
+    let userNameList: string[]=[];
+    let passwordList: string[]=[];
+   rows.forEach(function(row:any){
+    userNameList.push(row.username);
+    passwordList.push(row.password)
+
+   })
+//    console.log(userNameList)
+//    console.log(passwordList)
+
+   //To compare two list
+   let missing = userNameList.filter(items =>passwordList.indexOf(items) <0)
+  if(missing.length =0){
+    //console.log("test caser passed")
+  }else{
+    //console.log("Test failed")
+  }
+
+ });
+
+ Given(/^I check rows method$/, async (data) => {
+     let rows = data.rows();
+     console.log(rows)
+     console.log(rows[1][0]);
+
+ });
+
+Given(/^I navigate to test web url$/, async (data) => {
+    let rows = data.rowsHash();
+    await browser.url(rows.url);
+   
 });
 
+Then(/^I click on signup page$/, async () => {
+    await $("//a[contains(text(),'SignUp Form')]").click();
+    await $('label#lblname').waitForDisplayed();
+    let elem = $('label#lblname');
+    pages.login.waitUntilElementVisible(elem,"Full Name","Registratio page not found!")
+});
 
-Then(/^open google$/,  async() => {
-    let url = "https:www.google.com";
-     await datatablePage.loginToGoogle(url); 
-  });
-
-Then(/^Check below mentioned components$/, async(data) => {
-    await console.log("data is =>"+data)
-  });
 

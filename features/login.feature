@@ -1,22 +1,32 @@
 Feature: The Internet Guinea Pig Website
 
-  Scenario Outline: As a user, I can log into the secure area
-
-    Given I am on the login page
-    When I login with <username> and <password>
-    Then I should see a flash message saying <message>
-
-    Examples:
-      | username | password             | message                        |
-      | tomsmith | SuperSecretPassword! | You logged into a secure area! |
-      | foobar   | barfoo               | Your username is invalid!      |
-
-
-  Scenario: Check components of google page
+  Scenario: Check datatable using rowsHash function
     
-    Given open google
-    Then Check below mentioned components
-        |Google logo|
-        |Search textbox|
-        |Google search button|
-        |I am feelig lucky button|
+    Given I check rowHash method
+        | key     | value   |
+        |username | komalpld|
+        |password | RED345  |
+
+  Scenario: Check datatable using hashes function
+    
+    Given I check Hashes method
+        | username     | password   |
+        |username1     | pass1      |
+        |username2     | pass2      |
+        |username3     | pass3      |
+        |username4     | pass4      |       
+        
+  Scenario: Check datatable using rows function
+    
+    Given I check rows method
+        | name     | mobile   |
+        |komal     | 98987888      |
+        |rajesh     | 7878888      |
+        |vyom     | 9887678      |
+        |seema     | 5678998      |  
+
+  Scenario: Check selectors in WDIO
+    
+    Given I navigate to test web url
+        | url |   https://qavbox.github.io/demo/    |
+    Then I click on signup page

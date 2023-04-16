@@ -13,4 +13,21 @@ export default class Page {
         return browserInstance;
 
     }
+
+    public openGoogle(){
+        let browserInstance = browser.url(`https//:www.google.com`)
+        browser.maximizeWindow();
+        return browserInstance;
+
+    }
+
+    public waitUntilElementVisible(elem:any, desiredText:string, errorMessage:string){
+         elem.waitUntil(async function(){
+            console.error(await this.getText);
+            return (await this.getText())== desiredText
+        },{
+            timeout: 15000,
+            timeoutMsg: errorMessage
+        })
+    }
 }
