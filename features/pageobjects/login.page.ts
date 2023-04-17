@@ -31,13 +31,17 @@ class LoginPage extends Page {
         await this.btnSubmit.click();
     }
 
-    
+
 
     /**
      * overwrite specific options to adapt it to page object
      */
     public open () {
         return super.open('login');
+    }
+
+    public get googleLogo(){
+        return $('img.lnXdpd');
     }
 }
 

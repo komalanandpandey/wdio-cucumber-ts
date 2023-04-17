@@ -29,4 +29,16 @@ Feature: The Internet Guinea Pig Website
     
     Given I navigate to test web url
         | url |   https://qavbox.github.io/demo/    |
-    Then I click on signup page
+    #Then I click on signup page
+
+
+Scenario: Check google home page
+    
+    Given I navigate to google homepage
+          |url|https://www.google.com/|
+    Then I check below mentioned components
+        |components |
+        | Google Logo     | 
+        | search text WDIO |
+        | Google search button |
+        | I am feeling lucky button |

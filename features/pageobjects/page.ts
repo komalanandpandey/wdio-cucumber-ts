@@ -30,4 +30,18 @@ export default class Page {
             timeoutMsg: errorMessage
         })
     }
+
+    public waitUtillElementVisible(elem:any): any{
+        browser.waitUntil(async function(){
+            const elm = await elem
+            if(elm.length()==1){
+                return elm;
+            }else if(elm.length() >1){
+                console.error('Found multiple elements but desired exactly one')
+            }
+            return elem;
+        },{
+            timeoutMsg:"Element not found for locator "+elem
+        })
+    }
 }

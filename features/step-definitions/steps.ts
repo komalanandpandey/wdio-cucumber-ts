@@ -48,14 +48,15 @@ Given(/^I check Hashes method$/, async (data) => {
 
  Given(/^I check rows method$/, async (data) => {
      let rows = data.rows();
-     console.log(rows)
-     console.log(rows[1][0]);
+     //console.log(rows)
+     //console.log(rows[1][0]);
 
  });
 
 Given(/^I navigate to test web url$/, async (data) => {
     let rows = data.rowsHash();
     await browser.url(rows.url);
+    browser.maximizeWindow();
    
 });
 
@@ -65,5 +66,56 @@ Then(/^I click on signup page$/, async () => {
     let elem = $('label#lblname');
     pages.login.waitUntilElementVisible(elem,"Full Name","Registratio page not found!")
 });
+
+Given(/^I navigate to google homepage$/,async(data) =>{
+    let url = data.rowsHash().url;
+    browser.url(url)
+    browser.maximizeWindow();
+}) 
+
+Then(/^I check below mentioned components$/, async(data) =>{
+        let tableData = data.rows();
+        //console.log(tableData);
+         tableData.forEach(async item =>{
+            switch(item.toString()){
+                case "Google Logo":
+                    
+                    console.log((await pages.login.googleLogo).isDisplayed())
+                    // let elem = $('img.lnXdpd');
+                    //  let dis =  elem.getCSSProperty().then(function(){
+                    //     return true;
+                    // }).catch(function(){
+                    //     console.log("sorry");
+                    //     return false;
+                    // });
+               
+            
+                    // if(isDisplayed){
+                    //     console.info("Pass: Google logo validated")
+                    // }else{
+                    //     console.error("Fail: Google logo not validated")
+                    // }
+                    break;
+                case 'search text WDIO':
+                    console.info("write code here for Search text")
+                    break;
+                case 'Google search button':
+                    // $('//div[@class="lJ9FBc"]/center/input[1]')
+                    console.info("write code here to Validate search button")
+                    break;
+                case 'I am feeling lucky button':
+                    // $('//div[@class="lJ9FBc"]/center/input[2]')
+                    console.info("write code here to validate i am feeling lucky button")
+                    break;  
+                default:
+                    console.error("Not a valid option") 
+                    break; 
+
+            }
+        
+        })
+
+        
+})
 
 
