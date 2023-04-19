@@ -1,4 +1,4 @@
-import { Given, When, Then } from '@wdio/cucumber-framework';
+import { Given, When, Then, DataTable } from '@wdio/cucumber-framework';
 import loginPage from '../pageobjects/login.page';
 import LoginPage from '../pageobjects/login.page';
 import SecurePage from '../pageobjects/secure.page';
@@ -73,49 +73,76 @@ Given(/^I navigate to google homepage$/,async(data) =>{
     browser.maximizeWindow();
 }) 
 
-Then(/^I check below mentioned components$/, async(data) =>{
-        let tableData = data.rows();
-        //console.log(tableData);
-         tableData.forEach(async item =>{
-            switch(item.toString()){
+Then(/^I check below mentioned components$/, async(data: DataTable) =>{
+
+    async function validateComponents(){
+        let tableData = data.hashes();
+        console.log("len="+tableData.length);
+        for(let i=0;i<tableData.length;i++){
+            // await console.log(tableData[i].components);
+            switch(tableData[i].components){
                 case "Google Logo":
-                    
-                    console.log((await pages.login.googleLogo).isDisplayed())
-                    // let elem = $('img.lnXdpd');
-                    //  let dis =  elem.getCSSProperty().then(function(){
-                    //     return true;
-                    // }).catch(function(){
-                    //     console.log("sorry");
-                    //     return false;
-                    // });
-               
-            
-                    // if(isDisplayed){
-                    //     console.info("Pass: Google logo validated")
-                    // }else{
-                    //     console.error("Fail: Google logo not validated")
-                    // }
+                    let elem = $('img.lnXdpd');
+                    expect(await elem.isDisplayed()).toBe(true);
+                    expect(await elem.isDisplayed())
+                    console.info("Pass : Validated google logo")
                     break;
                 case 'search text WDIO':
-                    console.info("write code here for Search text")
+                    console.info("IN SEARCH")
+                    let searchElem = $('//textarea[@id="APjFqb"]');
+                    await searchElem.setValue("WDIO")
+                    browser.pause(5000)
+                    browser.keys('Escape');
+                    browser.pause(2000)
+                    console.info("Pass : Search text validated")
                     break;
                 case 'Google search button':
-                    // $('//div[@class="lJ9FBc"]/center/input[1]')
-                    console.info("write code here to Validate search button")
+                    console.info("IN GSB")
+                    browser.pause(5000);
+                    await $('//div[@class="lJ9FBc"]/center/input[1]').moveTo();
+                    browser.pause(5000);
+                    let searchButtoElem = $('//div[@class="lJ9FBc"]/center/input[1]');
+                    // console.log(await searchButtoElem.isFocused());
+                    await searchButtoElem.click();
+                    let searchResult = $('//a[@href="https://webdriver.io/"]/h3')
+                    let expectedRes = (await searchResult.getText()).trim();
+                    expect(expectedRes).toBe('WebdriverIO · Next-gen browser and mobile automation test ...')
+                    browser.pause(2000);
                     break;
+                    
                 case 'I am feeling lucky button':
-                    // $('//div[@class="lJ9FBc"]/center/input[2]')
-                    console.info("write code here to validate i am feeling lucky button")
+                    console.info("IN IMFL")
+                    await browser.back();
+                    await browser.pause(2000);
+                    const iframe = await $('//iframe[@name="callout"]');
+                    await browser.switchToFrame(iframe);
+                    await browser.pause(2000);
+                    await $('//button[@aria-label="No thanks"]').moveTo();
+                    await browser.pause(2000);
+                    (await $('//button[@aria-label="No thanks"]')).click();
+                    await browser.pause(2000);
+                    //let fluckElem = await $("//div[@class='lJ9FBc']/center/input[2]");
+                    //browser.executeScript(() => {"document.getElementByName('#RNmpXc').click()"},'gh')
+                    // (await $('//textarea[@id="APjFqb"]')).moveTo();
+                    // await fluckElem.moveTo();
+                    // await fluckElem.click();
+                    // await browser.positionClick()
+                    // browser.pause(5000);
+                    // console.error((await $('//div[@class="lJ9FBc"]/center/input[2]')).isClickable());
+                    // await browser.waitUntil(() => $('//div[@class="lJ9FBc"]/center/input[2]').isClickable())
+                    // await (await $('//div[@class="lJ9FBc"]/center/input[1]')).click();
+                    // console.info("Pass : Feeling lucky button validated")
                     break;  
                 default:
                     console.error("Not a valid option") 
                     break; 
 
             }
-        
-        })
+        }
 
-        
+        } 
+        await validateComponents();  
+         
 })
 
 
