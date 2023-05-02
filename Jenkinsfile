@@ -1,14 +1,25 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+
+        }
+    }
     stages {
          stage('Build project'){
             steps {
-                 echo 'Testinng project'
+                 echo 'Installing docker'
+                 sh ''' 
+                 apt install docker.io
+                 docker --version
+                 '''
             }
         }
         stage('Test project'){
             steps {
-                echo 'Testinng project'
+                echo 'Pulling project docker image'
+                sh '''
+                docker pull komalanandpandey/wdio-docker-test
+                '''
             }
         }
     }
