@@ -1,9 +1,10 @@
 pipeline {
-    agent any
-    tools {nodejs "nodejs"}  // Go to Manage Jenkins -> Global Tool config then configure nodejs -> 
-    environment {
-        CI = 'true' 
-    }
+    agent { dockerfile true }
+    // Install NodeJS plugin then configure nodejs in Manage Jenkins => Global Tool configuration 
+    // tools {nodejs "nodejs"}  
+    // environment {
+    //     CI = 'true' 
+    // }
     stages {
         stage('Build') {
             steps {
