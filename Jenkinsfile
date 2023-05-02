@@ -1,20 +1,23 @@
 pipeline {
     agent {
-        any { image 'node:16.14.2-alpine' args '-p 3000:3000' } 
+        docker {
+            image 'node:6-alpine'
+            args '-p 3000:3000'
+        }
+    }
+    tools {nodejs "NODEJS"} 
+    environment {
+        CI = 'true' 
     }
     stages {
-         stage('Build project'){
+        stage('Build') {
             steps {
-                 echo 'Installing docker'
-                 sh 'npm install -g'
+                sh 'npm install'
             }
         }
-        stage('Test project'){
+        stage('Test') { 
             steps {
-                echo 'Pulling project docker image'
-                sh '''
-                docker pull komalanandpandey/wdio-docker-test
-                '''
+                sh './jenkins/scripts/test.sh' 
             }
         }
     }
