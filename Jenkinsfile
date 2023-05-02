@@ -6,7 +6,6 @@ pipeline {
          stage('Build project'){
             steps {
                  echo 'Installing docker'
-                 sh 'node --version'
                  sh 'npm install -g'
             }
         }
