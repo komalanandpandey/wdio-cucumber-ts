@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker{
+            image 'node:16.14.2-alpine'
+        }
+    }
     stages {
          stage('Build project'){
             steps {
