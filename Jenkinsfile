@@ -6,10 +6,8 @@ pipeline {
          stage('Build project'){
             steps {
                  echo 'Installing docker'
-                 sh ''' 
-                 apt-get install docker.io
-                 docker --version
-                 '''
+                 sh 'node --version'
+                 sh 'npm install -g'
             }
         }
         stage('Test project'){
