@@ -24,15 +24,15 @@ Feature: The Internet Guinea Pig Website
         |rajesh     | 7878888      |
         |vyom     | 9887678      |
         |seema     | 5678998      |  
-
+  @sc1
   Scenario: Check selectors in WDIO
     
     Given I navigate to test web url
         | url |   https://qavbox.github.io/demo/    |
     #Then I click on signup page
 
-
-Scenario: Check google home page
+  @sc4
+  Scenario: Check google home page
     
     Given I navigate to google homepage
           |url|https://www.google.com/|

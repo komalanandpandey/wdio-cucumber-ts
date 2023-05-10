@@ -1,9 +1,7 @@
-FROM node:16.14.2-alpine as base
-
+FROM ianwalter/puppeteer:latest
 WORKDIR /app
+ADD . /app
 
-COPY ["package.json", "package-lock.json*", "./"]
+RUN npm install
 
-FROM base as test
-RUN npm install -g
-COPY . .
+CMD npx wdio
